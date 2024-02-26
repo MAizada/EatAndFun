@@ -10,6 +10,29 @@ final class LoginViewController: UIViewController {
         return imageView
     }()
     
+    private lazy var redView: UIView = {
+        let view = UIView()
+        view.backgroundColor = ColorExtension.lightRed
+        view.layer.cornerRadius = 150
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        let imageView = UIImageView(image: UIImage(named: "backroundImage2"))
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        view.addSubview(imageView)
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: view.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        return view
+    }()
+
+    
     private lazy var eatLabel: UILabel = {
         let label = UILabel()
         label.text = "Eat."
@@ -47,37 +70,82 @@ final class LoginViewController: UIViewController {
     private lazy var loginBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 10
+        view.layer.borderColor = UIColor.gray.cgColor
+        view.layer.borderWidth = 1.0
+        view.layer.cornerRadius = 15
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private lazy var loginSlider: UISlider = {
-        let slider = UISlider()
-        slider.translatesAutoresizingMaskIntoConstraints = false
-        return slider
+    private lazy var loginSegmentedControl: UISegmentedControl = {
+        let segmentedControl = UISegmentedControl(items: ["Log In", "Sign Up"])
+        let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]
+           segmentedControl.setTitleTextAttributes(fontAttributes, for: .normal)
+      
+        segmentedControl.setBackgroundImage(imageWithColor(color: ColorExtension.darkRed), for: .selected, barMetrics: .default)
+        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        
+        segmentedControl.setBackgroundImage(imageWithColor(color: ColorExtension.lightYellow), for: .normal, barMetrics: .default)
+        segmentedControl.setTitleTextAttributes([.foregroundColor: ColorExtension.darkRed], for: .normal)
+        
+        DispatchQueue.main.async {
+            for i in 0..<segmentedControl.numberOfSegments {
+                let segmentView = segmentedControl.subviews[i]
+                segmentView.layer.cornerRadius = 15
+                segmentView.layer.masksToBounds = true
+            }
+        }
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        return segmentedControl
     }()
     
     private lazy var emailTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Enter email or username"
-        textField.borderStyle = .roundedRect
+     
+        let separatorView = UIView()
+        separatorView.backgroundColor = .gray
+        separatorView.translatesAutoresizingMaskIntoConstraints = false
+        textField.addSubview(separatorView)
+        
+        NSLayoutConstraint.activate([
+            separatorView.leadingAnchor.constraint(equalTo: textField.leadingAnchor),
+            separatorView.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
+            separatorView.bottomAnchor.constraint(equalTo: textField.bottomAnchor),
+            separatorView.heightAnchor.constraint(equalToConstant: 1.0)
+        ])
+        
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
-    
+
     private lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Password"
         textField.isSecureTextEntry = true
-        textField.borderStyle = .roundedRect
+        
+        let separatorView = UIView()
+        separatorView.backgroundColor = .gray
+        separatorView.translatesAutoresizingMaskIntoConstraints = false
+        textField.addSubview(separatorView)
+        
+        NSLayoutConstraint.activate([
+            separatorView.leadingAnchor.constraint(equalTo: textField.leadingAnchor),
+            separatorView.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
+            separatorView.bottomAnchor.constraint(equalTo: textField.bottomAnchor),
+            separatorView.heightAnchor.constraint(equalToConstant: 1.0) // Высота линии границы
+        ])
+        
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
+
     
     private lazy var forgotPasswordButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Forgot Password", for: .normal)
+        button.setTitle("Forgot Password?", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         button.setTitleColor(.gray, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -86,8 +154,9 @@ final class LoginViewController: UIViewController {
     private lazy var loginButton: UIButton = {
         let button = UIButton()
         button.setTitle("Log In", for: .normal)
-        button.backgroundColor = .red
-        button.layer.cornerRadius = 5
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.backgroundColor = ColorExtension.darkRed
+        button.layer.cornerRadius = 15
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -95,6 +164,7 @@ final class LoginViewController: UIViewController {
     private lazy var orLabel: UILabel = {
         let label = UILabel()
         label.text = "OR"
+        label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .gray
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -123,14 +193,15 @@ final class LoginViewController: UIViewController {
     }
     
     private func setupViews() {
-        view.backgroundColor = .red
+        view.backgroundColor = .white
+        view.addSubview(redView)
         view.addSubview(eatLabel)
         view.addSubview(logoImageView)
         view.addSubview(funLabel)
         view.addSubview(pizzaImageView)
         view.addSubview(burgerImageView)
         view.addSubview(loginBackgroundView)
-        loginBackgroundView.addSubview(loginSlider)
+        loginBackgroundView.addSubview(loginSegmentedControl)
         loginBackgroundView.addSubview(emailTextField)
         loginBackgroundView.addSubview(passwordTextField)
         loginBackgroundView.addSubview(forgotPasswordButton)
@@ -140,7 +211,26 @@ final class LoginViewController: UIViewController {
         loginBackgroundView.addSubview(facebookIconImageView)
     }
     
+   //MARK: -
+    private func imageWithColor(color: UIColor) -> UIImage {
+        let rect = CGRect(x: 0, y: 0, width: 1, height: 32)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+        context?.setFillColor(color.cgColor)
+        context?.fill(rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image ?? UIImage()
+    }
+    
     private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            redView.topAnchor.constraint(equalTo: view.topAnchor, constant: -60),
+            redView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -10),
+            redView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 10),
+            redView.heightAnchor.constraint(equalToConstant: 350)
+        ])
+        
         NSLayoutConstraint.activate([
             eatLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
             eatLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 90)
@@ -175,37 +265,39 @@ final class LoginViewController: UIViewController {
         NSLayoutConstraint.activate([
             loginBackgroundView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             loginBackgroundView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            loginBackgroundView.widthAnchor.constraint(equalToConstant: 300),
-            loginBackgroundView.heightAnchor.constraint(equalToConstant: 400)
+            loginBackgroundView.widthAnchor.constraint(equalToConstant: 316),
+            loginBackgroundView.heightAnchor.constraint(equalToConstant: 434)
         ])
         
         NSLayoutConstraint.activate([
-            loginSlider.centerXAnchor.constraint(equalTo: loginBackgroundView.centerXAnchor),
-            loginSlider.topAnchor.constraint(equalTo: loginBackgroundView.topAnchor, constant: 20)
+            loginSegmentedControl.centerXAnchor.constraint(equalTo: loginBackgroundView.centerXAnchor),
+            loginSegmentedControl.topAnchor.constraint(equalTo: loginBackgroundView.topAnchor, constant: 20),
+            loginSegmentedControl.widthAnchor.constraint(equalToConstant: 225),
+            loginSegmentedControl.heightAnchor.constraint(equalToConstant: 28)
         ])
         
         NSLayoutConstraint.activate([
-            emailTextField.topAnchor.constraint(equalTo: loginSlider.bottomAnchor, constant: 20),
-            emailTextField.leadingAnchor.constraint(equalTo: loginBackgroundView.leadingAnchor, constant: 20),
-            emailTextField.trailingAnchor.constraint(equalTo: loginBackgroundView.trailingAnchor, constant: -20)
+            emailTextField.topAnchor.constraint(equalTo: loginSegmentedControl.bottomAnchor, constant: 40),
+            emailTextField.leadingAnchor.constraint(equalTo: loginBackgroundView.leadingAnchor, constant: 30),
+            emailTextField.trailingAnchor.constraint(equalTo: loginBackgroundView.trailingAnchor, constant: -30)
         ])
         
         NSLayoutConstraint.activate([
-            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 10),
-            passwordTextField.leadingAnchor.constraint(equalTo: loginBackgroundView.leadingAnchor, constant: 20),
-            passwordTextField.trailingAnchor.constraint(equalTo: loginBackgroundView.trailingAnchor, constant: -20)
+            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 30),
+            passwordTextField.leadingAnchor.constraint(equalTo: loginBackgroundView.leadingAnchor, constant: 30),
+            passwordTextField.trailingAnchor.constraint(equalTo: loginBackgroundView.trailingAnchor, constant: -30)
         ])
         
         NSLayoutConstraint.activate([
             forgotPasswordButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 10),
-            forgotPasswordButton.leadingAnchor.constraint(equalTo: loginBackgroundView.leadingAnchor, constant: 20)
+            forgotPasswordButton.trailingAnchor.constraint(equalTo: loginBackgroundView.trailingAnchor, constant: -20)
         ])
         
         NSLayoutConstraint.activate([
             loginButton.topAnchor.constraint(equalTo: forgotPasswordButton.bottomAnchor, constant: 20),
-            loginButton.leadingAnchor.constraint(equalTo: loginBackgroundView.leadingAnchor, constant: 20),
-            loginButton.trailingAnchor.constraint(equalTo: loginBackgroundView.trailingAnchor, constant: -20),
-            loginButton.heightAnchor.constraint(equalToConstant: 40)
+            loginButton.centerXAnchor.constraint(equalTo: loginBackgroundView.centerXAnchor),
+            loginButton.widthAnchor.constraint(equalToConstant: 128),
+            loginButton.heightAnchor.constraint(equalToConstant: 28)
         ])
         
         NSLayoutConstraint.activate([
