@@ -73,20 +73,20 @@ final class LoginViewController: UIViewController {
         view.layer.borderWidth = 1.0
         view.layer.cornerRadius = 15
         view.translatesAutoresizingMaskIntoConstraints = false
-
+        
         let imageView = UIImageView(image: UIImage(named: "backroundImage1"))
         imageView.contentMode = .center
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
-
+        
         NSLayoutConstraint.activate([
             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-
+        
         return view
     }()
-
+    
     
     private lazy var segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Log In", "Sign Up"])
@@ -165,7 +165,6 @@ final class LoginViewController: UIViewController {
         return textField
     }()
     
-    
     private lazy var forgotPasswordButton: UIButton = {
         let button = UIButton()
         button.setTitle("Forgot Password?", for: .normal)
@@ -182,6 +181,7 @@ final class LoginViewController: UIViewController {
         button.backgroundColor = ColorExtension.darkRed
         button.layer.cornerRadius = 15
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(actionButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -271,6 +271,11 @@ final class LoginViewController: UIViewController {
         }
     }
     
+    @objc private func actionButtonTapped() {
+        let profileViewController = ProfileViewController()
+        navigationController?.pushViewController(profileViewController, animated: true)
+        print("button tapped")
+    }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
