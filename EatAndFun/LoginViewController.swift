@@ -272,8 +272,8 @@ final class LoginViewController: UIViewController {
     }
     
     @objc private func actionButtonTapped() {
-        let profileViewController = ProfileViewController()
-        navigationController?.pushViewController(profileViewController, animated: true)
+        let mainScreenViewController = MainScreenViewController()
+        navigationController?.pushViewController(mainScreenViewController, animated: true)
         print("button tapped")
     }
     

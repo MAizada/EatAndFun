@@ -1,7 +1,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class MainScreenViewController: UIViewController {
     
     // MARK: -
     private lazy var backgroundView: UIView = {

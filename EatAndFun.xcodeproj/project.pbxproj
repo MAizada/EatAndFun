@@ -11,7 +11,7 @@
 		2E3645262B8A049B0050A5C2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3645252B8A049B0050A5C2 /* SceneDelegate.swift */; };
 		2E3645282B8A049B0050A5C2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3645272B8A049B0050A5C2 /* LoginViewController.swift */; };
 		2E36452D2B8A049D0050A5C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E36452C2B8A049D0050A5C2 /* Assets.xcassets */; };
-		2E36453A2B8A08440050A5C2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3645392B8A08440050A5C2 /* ProfileViewController.swift */; };
+		2E36453A2B8A08440050A5C2 /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3645392B8A08440050A5C2 /* MainScreenViewController.swift */; };
 		2E36453C2B8A08500050A5C2 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E36453B2B8A08500050A5C2 /* LaunchViewController.swift */; };
 		2E4124C72B8C90D9000646AA /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4124C62B8C90D9000646AA /* ColorExtension.swift */; };
 /* End PBXBuildFile section */
@@ -23,7 +23,7 @@
 		2E3645272B8A049B0050A5C2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2E36452C2B8A049D0050A5C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2E3645312B8A049D0050A5C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2E3645392B8A08440050A5C2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		2E3645392B8A08440050A5C2 /* MainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewController.swift; sourceTree = "<group>"; };
 		2E36453B2B8A08500050A5C2 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		2E4124C62B8C90D9000646AA /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,7 +62,7 @@
 				2E3645252B8A049B0050A5C2 /* SceneDelegate.swift */,
 				2E36453B2B8A08500050A5C2 /* LaunchViewController.swift */,
 				2E3645272B8A049B0050A5C2 /* LoginViewController.swift */,
-				2E3645392B8A08440050A5C2 /* ProfileViewController.swift */,
+				2E3645392B8A08440050A5C2 /* MainScreenViewController.swift */,
 				2E4124C62B8C90D9000646AA /* ColorExtension.swift */,
 				2E36452C2B8A049D0050A5C2 /* Assets.xcassets */,
 				2E3645312B8A049D0050A5C2 /* Info.plist */,
@@ -144,7 +144,7 @@
 				2E36453C2B8A08500050A5C2 /* LaunchViewController.swift in Sources */,
 				2E3645262B8A049B0050A5C2 /* SceneDelegate.swift in Sources */,
 				2E4124C72B8C90D9000646AA /* ColorExtension.swift in Sources */,
-				2E36453A2B8A08440050A5C2 /* ProfileViewController.swift in Sources */,
+				2E36453A2B8A08440050A5C2 /* MainScreenViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
