@@ -6,6 +6,7 @@ struct ColorExtension {
     static let darkRed = UIColor(hex: 0xBE0127)
     static let lightRed = UIColor(hex: 0xF13A21)
     static let lightYellow = UIColor(hex: 0xF8E0A0)
+    static let lightGray = UIColor(hex: 0xE5E5E5)
 }
 
 extension UIColor {

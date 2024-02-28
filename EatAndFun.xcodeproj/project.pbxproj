@@ -14,6 +14,8 @@
 		2E36453A2B8A08440050A5C2 /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3645392B8A08440050A5C2 /* MainScreenViewController.swift */; };
 		2E36453C2B8A08500050A5C2 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E36453B2B8A08500050A5C2 /* LaunchViewController.swift */; };
 		2E4124C72B8C90D9000646AA /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4124C62B8C90D9000646AA /* ColorExtension.swift */; };
+		2E6819D82B8F42D9002BCA84 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6819D72B8F42D9002BCA84 /* CategoryCell.swift */; };
+		2E6819DA2B8F5C64002BCA84 /* SubcategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6819D92B8F5C64002BCA84 /* SubcategoryCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		2E3645392B8A08440050A5C2 /* MainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewController.swift; sourceTree = "<group>"; };
 		2E36453B2B8A08500050A5C2 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		2E4124C62B8C90D9000646AA /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		2E6819D72B8F42D9002BCA84 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		2E6819D92B8F5C64002BCA84 /* SubcategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubcategoryCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,8 @@
 				2E36453B2B8A08500050A5C2 /* LaunchViewController.swift */,
 				2E3645272B8A049B0050A5C2 /* LoginViewController.swift */,
 				2E3645392B8A08440050A5C2 /* MainScreenViewController.swift */,
+				2E6819D72B8F42D9002BCA84 /* CategoryCell.swift */,
+				2E6819D92B8F5C64002BCA84 /* SubcategoryCell.swift */,
 				2E4124C62B8C90D9000646AA /* ColorExtension.swift */,
 				2E36452C2B8A049D0050A5C2 /* Assets.xcassets */,
 				2E3645312B8A049D0050A5C2 /* Info.plist */,
@@ -139,9 +145,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E6819DA2B8F5C64002BCA84 /* SubcategoryCell.swift in Sources */,
 				2E3645282B8A049B0050A5C2 /* LoginViewController.swift in Sources */,
 				2E3645242B8A049B0050A5C2 /* AppDelegate.swift in Sources */,
 				2E36453C2B8A08500050A5C2 /* LaunchViewController.swift in Sources */,
+				2E6819D82B8F42D9002BCA84 /* CategoryCell.swift in Sources */,
 				2E3645262B8A049B0050A5C2 /* SceneDelegate.swift in Sources */,
 				2E4124C72B8C90D9000646AA /* ColorExtension.swift in Sources */,
 				2E36453A2B8A08440050A5C2 /* MainScreenViewController.swift in Sources */,
