@@ -148,6 +148,7 @@ final class LoginViewController: UIViewController {
         let textField = UITextField()
         textField.placeholder = "Confirm Password"
         textField.isSecureTextEntry = true
+        textField.isHidden = true
         
         let separatorView = UIView()
         separatorView.backgroundColor = .gray
@@ -240,18 +241,20 @@ final class LoginViewController: UIViewController {
     }
     
     private func updateUIForSelectedSegment() {
-        if segmentedControl.selectedSegmentIndex == 0 {
-            confirmPasswordTextField.removeFromSuperview()
-            actionButton.setTitle("Log In", for: .normal)
-            actionButton.backgroundColor = ColorExtension.darkRed
-            loginBackgroundView.addSubview(actionButton)
-            NSLayoutConstraint.activate([
-                actionButton.topAnchor.constraint(equalTo: forgotPasswordButton.bottomAnchor, constant: 20),
-                actionButton.centerXAnchor.constraint(equalTo: loginBackgroundView.centerXAnchor),
-                actionButton.widthAnchor.constraint(equalToConstant: 128),
-                actionButton.heightAnchor.constraint(equalToConstant: 28)
-            ])
-        } else {
+           if segmentedControl.selectedSegmentIndex == 0 {
+               confirmPasswordTextField.isHidden = true
+               actionButton.setTitle("Log In", for: .normal)
+               actionButton.backgroundColor = ColorExtension.darkRed
+               loginBackgroundView.addSubview(actionButton)
+               
+               NSLayoutConstraint.activate([
+                   actionButton.topAnchor.constraint(equalTo: forgotPasswordButton.bottomAnchor, constant: 20),
+                   actionButton.centerXAnchor.constraint(equalTo: loginBackgroundView.centerXAnchor),
+                   actionButton.widthAnchor.constraint(equalToConstant: 128),
+                   actionButton.heightAnchor.constraint(equalToConstant: 28)
+               ])
+           } else {
+               confirmPasswordTextField.isHidden = false 
             actionButton.removeFromSuperview()
             loginBackgroundView.addSubview(confirmPasswordTextField)
             NSLayoutConstraint.activate([
@@ -268,6 +271,7 @@ final class LoginViewController: UIViewController {
                 actionButton.widthAnchor.constraint(equalToConstant: 128),
                 actionButton.heightAnchor.constraint(equalToConstant: 28)
             ])
+            
         }
     }
     

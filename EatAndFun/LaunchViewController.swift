@@ -5,7 +5,7 @@ final class LaunchViewController: UIViewController {
     
     private lazy var gradientLayer: CAGradientLayer = {
         let layer = CAGradientLayer()
-        layer.colors = [UIColor.red.cgColor, UIColor.orange.cgColor]
+        layer.colors = [ColorExtension.darkRed.cgColor, ColorExtension.lightRed.cgColor] 
         layer.startPoint = CGPoint(x: 0.5, y: 1.0)
         layer.endPoint = CGPoint(x: 0.5, y: 0.0)
         layer.frame = view.bounds
