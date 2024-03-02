@@ -6,7 +6,7 @@ class MainScreenViewController: UIViewController {
     // MARK: -
     
     private var selectedCategory: String?
-    private var selectedSubcategories: [String] = []
+    private var selectedSubcategories: [Subcategory] = []
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -58,9 +58,7 @@ class MainScreenViewController: UIViewController {
         searchBar.barTintColor = ColorExtension.lightYellow
         
         if let textField = searchBar.value(forKey: "searchField") as? UITextField {
-            
             textField.attributedPlaceholder = NSAttributedString(string: "Search for a food item", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
-            
             textField.leftView = nil
             textField.layer.cornerRadius = 25
             textField.layer.masksToBounds = true
@@ -99,6 +97,31 @@ class MainScreenViewController: UIViewController {
         collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseIdentifier)
         return collectionView
     }()
+    
+    private lazy var subcategoriesLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Subcategories"
+        label.font = UIFont(name: "Rowdies", size: 18)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var subcategoriesCollectionView: UICollectionView = {
+           let layout = UICollectionViewFlowLayout()
+           layout.scrollDirection = .horizontal
+           layout.minimumLineSpacing = 15
+           layout.minimumInteritemSpacing = 15
+           
+           let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+           collectionView.backgroundColor = .clear
+           collectionView.showsHorizontalScrollIndicator = false
+           collectionView.translatesAutoresizingMaskIntoConstraints = false
+           collectionView.delegate = self
+           collectionView.dataSource = self
+           collectionView.register(SubcategoryCell.self, forCellWithReuseIdentifier: SubcategoryCell.reuseIdentifier)
+           return collectionView
+       }()
     
     private lazy var burgersLabel: UILabel = {
         let label = UILabel()
@@ -141,7 +164,7 @@ class MainScreenViewController: UIViewController {
     
     // MARK: -
     private func setupViews() {
-        [backgroundView, backgroundImage, menuButton, profileButton, chooseLabel, searchBar, categoriesLabel, categoriesCollectionView, burgersLabel, pizzaLabel, drinksLabel].forEach { view.addSubview($0) }
+        [backgroundView, backgroundImage, menuButton, profileButton, chooseLabel, searchBar, categoriesLabel, categoriesCollectionView, subcategoriesLabel, subcategoriesCollectionView, burgersLabel, pizzaLabel, drinksLabel].forEach { view.addSubview($0) }
     }
     
     // MARK: -
@@ -206,18 +229,30 @@ class MainScreenViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            burgersLabel.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor, constant: 5),
-            burgersLabel.centerXAnchor.constraint(equalTo: categoriesCollectionView.leadingAnchor, constant: 55)
+            subcategoriesLabel.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor, constant: 20),
+            subcategoriesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
         ])
         
         NSLayoutConstraint.activate([
-            pizzaLabel.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor, constant: 5),
-            pizzaLabel.centerXAnchor.constraint(equalTo: categoriesCollectionView.centerXAnchor)
+                   subcategoriesCollectionView.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor, constant: 10),
+                   subcategoriesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+                   subcategoriesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                   subcategoriesCollectionView.heightAnchor.constraint(equalToConstant: 70)
+               ])
+        
+        NSLayoutConstraint.activate([
+            burgersLabel.topAnchor.constraint(equalTo: subcategoriesCollectionView.bottomAnchor, constant: 5),
+            burgersLabel.centerXAnchor.constraint(equalTo: subcategoriesCollectionView.leadingAnchor, constant: 55)
         ])
         
         NSLayoutConstraint.activate([
-            drinksLabel.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor, constant: 5),
-            drinksLabel.centerXAnchor.constraint(equalTo: categoriesCollectionView.trailingAnchor, constant: -55)
+            pizzaLabel.topAnchor.constraint(equalTo: subcategoriesCollectionView.bottomAnchor, constant: 5),
+            pizzaLabel.centerXAnchor.constraint(equalTo: subcategoriesCollectionView.centerXAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            drinksLabel.topAnchor.constraint(equalTo: subcategoriesCollectionView.bottomAnchor, constant: 5),
+            drinksLabel.centerXAnchor.constraint(equalTo: subcategoriesCollectionView.trailingAnchor, constant: -55)
         ])
     }
 }
@@ -236,38 +271,60 @@ extension MainScreenViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
-        
-        switch indexPath.section {
-        case 0:
-            cell.imageView.image = UIImage(named: "burgerBlack")
-        case 1:
-            cell.imageView.image = UIImage(named: "pizzaBlack")
-        case 2:
-            cell.imageView.image = UIImage(named: "drinksBlack")
-        default:
-            break
+        if collectionView == categoriesCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
+            
+            switch indexPath.section {
+            case 0:
+                cell.imageView.image = UIImage(named: "burgerBlack")
+            case 1:
+                cell.imageView.image = UIImage(named: "pizzaBlack")
+            case 2:
+                cell.imageView.image = UIImage(named: "drinksBlack")
+            default:
+                break
+            }
+            
+            return cell
+        } else if collectionView == subcategoriesCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SubcategoryCell.reuseIdentifier, for: indexPath) as! SubcategoryCell
+            // Configure subcategory cell as needed
+            
+            return cell
         }
         
-        return cell
+        return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0:
-            selectedCategory = "Burgers"
-            selectedSubcategories = ["Cheeseburger", "Veggie Burger", "Chicken Burger"]
-        case 1:
-            selectedCategory = "Pizza"
-            selectedSubcategories = ["Margherita", "Pepperoni", "Vegetarian"]
-        case 2:
-            selectedCategory = "Drinks"
-            selectedSubcategories = ["Cola", "Orange Juice", "Water"]
-        default:
-            break
-        }
+        if collectionView == categoriesCollectionView {
+            switch indexPath.section {
+            case 0:
+                selectedCategory = "Burgers"
+                selectedSubcategories = [
+                    Subcategory(title: "Burger3", description: "Delicious Burger", price: "Rs.150", imageName: "burger3"),
+                    Subcategory(title: "Chicken Burger", description: "Tasty Chicken Burger", price: "Rs.*****", imageName: "chickenBurger")
+                ]
+            case 1:
+                selectedCategory = "Pizza"
+                selectedSubcategories = [
+                    Subcategory(title: "Margherita", description: "Classic Margherita Pizza", price: "Rs.100", imageName: "margherita"),
+                    Subcategory(title: "Pepperoni", description: "Spicy Pepperoni Pizza", price: "Rs.120", imageName: "pepperoni"),
+                    Subcategory(title: "Vegetarian", description: "Vegetarian Delight Pizza", price: "Rs.110", imageName: "vegetarian")
+                ]
+            case 2:
+                selectedCategory = "Drinks"
+                selectedSubcategories = [
+                    Subcategory(title: "Cola", description: "Refreshing Cola", price: "Rs.50", imageName: "cola"),
+                    Subcategory(title: "Orange Juice", description: "Fresh Orange Juice", price: "Rs.80", imageName: "orangeJuice"),
+                    Subcategory(title: "Water", description: "Pure Water", price: "Rs.30", imageName: "water")
+                ]
+            default:
+                break
+            }
 
-        categoriesCollectionView.reloadData()
+            subcategoriesCollectionView.reloadData()
+        }
     }
 
 }
