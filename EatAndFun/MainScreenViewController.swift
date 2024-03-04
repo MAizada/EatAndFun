@@ -1,9 +1,9 @@
 
 import UIKit
 
-class MainScreenViewController: UIViewController {
+final class MainScreenViewController: UIViewController {
     
-    // MARK: -
+    // MARK: - UI
     
     private var selectedCategory: String?
     private var selectedSubcategories: [Subcategory] = []
@@ -98,30 +98,21 @@ class MainScreenViewController: UIViewController {
         return collectionView
     }()
     
-    private lazy var subcategoriesLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Subcategories"
-        label.font = UIFont(name: "Rowdies", size: 18)
-        label.textColor = .black
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
     private lazy var subcategoriesCollectionView: UICollectionView = {
-           let layout = UICollectionViewFlowLayout()
-           layout.scrollDirection = .horizontal
-           layout.minimumLineSpacing = 15
-           layout.minimumInteritemSpacing = 15
-           
-           let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-           collectionView.backgroundColor = .clear
-           collectionView.showsHorizontalScrollIndicator = false
-           collectionView.translatesAutoresizingMaskIntoConstraints = false
-           collectionView.delegate = self
-           collectionView.dataSource = self
-           collectionView.register(SubcategoryCell.self, forCellWithReuseIdentifier: SubcategoryCell.reuseIdentifier)
-           return collectionView
-       }()
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 15
+        layout.minimumInteritemSpacing = 15
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(SubcategoryCell.self, forCellWithReuseIdentifier: SubcategoryCell.reuseIdentifier)
+        return collectionView
+    }()
     
     private lazy var burgersLabel: UILabel = {
         let label = UILabel()
@@ -151,6 +142,7 @@ class MainScreenViewController: UIViewController {
     }()
     
     // MARK: -
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -160,14 +152,29 @@ class MainScreenViewController: UIViewController {
         
         categoriesCollectionView.delegate = self
         categoriesCollectionView.dataSource = self
+        
+        selectedCategory = "Burgers"
+        updateSubcategories()
     }
     
     // MARK: -
+    
     private func setupViews() {
-        [backgroundView, backgroundImage, menuButton, profileButton, chooseLabel, searchBar, categoriesLabel, categoriesCollectionView, subcategoriesLabel, subcategoriesCollectionView, burgersLabel, pizzaLabel, drinksLabel].forEach { view.addSubview($0) }
+        [backgroundView, backgroundImage, menuButton, profileButton, chooseLabel, searchBar, categoriesLabel, categoriesCollectionView, subcategoriesCollectionView, burgersLabel, pizzaLabel, drinksLabel].forEach { view.addSubview($0) }
+        
+        categoriesCollectionView.layer.shadowColor = UIColor.black.cgColor
+        categoriesCollectionView.layer.shadowOpacity = 0.5
+        categoriesCollectionView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        categoriesCollectionView.layer.shadowRadius = 5
+        
+        subcategoriesCollectionView.layer.shadowColor = UIColor.black.cgColor
+        subcategoriesCollectionView.layer.shadowOpacity = 0.5
+        subcategoriesCollectionView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        subcategoriesCollectionView.layer.shadowRadius = 5
     }
     
     // MARK: -
+    
     @objc private func menuButtonTapped() {
         print("Menu button tapped!")
     }
@@ -176,83 +183,84 @@ class MainScreenViewController: UIViewController {
         print("Profile button tapped!")
     }
     
+    private func updateSubcategories() {
+        switch selectedCategory {
+        case "Burgers":
+            selectedSubcategories = [
+                Subcategory(title: "Chicken Burger", description: "*****", price: "Rs.150", imageName: "burger3"),
+                Subcategory(title: "Chicken Burger", description: "Tasty Chicken Burger", price: "Rs.*****", imageName: "chickenBurger")
+            ]
+        case "Pizza":
+            selectedSubcategories = [
+                Subcategory(title: "Margherita", description: "Classic Margherita Pizza", price: "Rs.100", imageName: "margherita"),
+                Subcategory(title: "Pepperoni", description: "Spicy Pepperoni Pizza", price: "Rs.120", imageName: "pepperoni"),
+                Subcategory(title: "Vegetarian", description: "Vegetarian Delight Pizza", price: "Rs.110", imageName: "vegetarian")
+            ]
+        case "Drinks":
+            selectedSubcategories = [
+                Subcategory(title: "Cola", description: "Refreshing Cola", price: "Rs.50", imageName: "cola"),
+                Subcategory(title: "Orange Juice", description: "Fresh Orange Juice", price: "Rs.80", imageName: "orangeJuice"),
+                Subcategory(title: "Water", description: "Pure Water", price: "Rs.30", imageName: "water")
+            ]
+        default:
+            break
+        }
+        
+        subcategoriesCollectionView.reloadData()
+    }
+    
+    
     // MARK: -
+    
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             backgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: -60),
             backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -10),
             backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 10),
-            backgroundView.heightAnchor.constraint(equalToConstant: 350)
-        ])
-        
-        NSLayoutConstraint.activate([
+            backgroundView.heightAnchor.constraint(equalToConstant: 350),
+            
             backgroundImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            backgroundImage.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
+            backgroundImage.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
             menuButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             menuButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             menuButton.widthAnchor.constraint(equalToConstant: 30),
-            menuButton.heightAnchor.constraint(equalToConstant: 30)
-        ])
-        
-        NSLayoutConstraint.activate([
+            menuButton.heightAnchor.constraint(equalToConstant: 30),
+            
             profileButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             profileButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             profileButton.widthAnchor.constraint(equalToConstant: 30),
-            profileButton.heightAnchor.constraint(equalToConstant: 30)
-        ])
-        
-        NSLayoutConstraint.activate([
+            profileButton.heightAnchor.constraint(equalToConstant: 30),
+            
             chooseLabel.topAnchor.constraint(equalTo: menuButton.bottomAnchor, constant: 16),
             chooseLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-        ])
-        
-        NSLayoutConstraint.activate([
+            
             searchBar.topAnchor.constraint(equalTo: chooseLabel.bottomAnchor, constant: 10),
             searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            searchBar.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        
-        NSLayoutConstraint.activate([
+            searchBar.heightAnchor.constraint(equalToConstant: 50),
+            
             categoriesLabel.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 20),
-            categoriesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
-        ])
-        
-        NSLayoutConstraint.activate([
+            categoriesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            
             categoriesCollectionView.topAnchor.constraint(equalTo: categoriesLabel.bottomAnchor, constant: 10),
             categoriesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             categoriesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            categoriesCollectionView.heightAnchor.constraint(equalToConstant: 100)
-        ])
-        
-        NSLayoutConstraint.activate([
-            subcategoriesLabel.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor, constant: 20),
-            subcategoriesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
-        ])
-        
-        NSLayoutConstraint.activate([
-                   subcategoriesCollectionView.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor, constant: 10),
-                   subcategoriesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-                   subcategoriesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-                   subcategoriesCollectionView.heightAnchor.constraint(equalToConstant: 70)
-               ])
-        
-        NSLayoutConstraint.activate([
-            burgersLabel.topAnchor.constraint(equalTo: subcategoriesCollectionView.bottomAnchor, constant: 5),
-            burgersLabel.centerXAnchor.constraint(equalTo: subcategoriesCollectionView.leadingAnchor, constant: 55)
-        ])
-        
-        NSLayoutConstraint.activate([
-            pizzaLabel.topAnchor.constraint(equalTo: subcategoriesCollectionView.bottomAnchor, constant: 5),
-            pizzaLabel.centerXAnchor.constraint(equalTo: subcategoriesCollectionView.centerXAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
-            drinksLabel.topAnchor.constraint(equalTo: subcategoriesCollectionView.bottomAnchor, constant: 5),
-            drinksLabel.centerXAnchor.constraint(equalTo: subcategoriesCollectionView.trailingAnchor, constant: -55)
+            categoriesCollectionView.heightAnchor.constraint(equalToConstant: 100),
+            
+            subcategoriesCollectionView.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor, constant: 50),
+            subcategoriesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            subcategoriesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            subcategoriesCollectionView.heightAnchor.constraint(equalToConstant: 240),
+            
+            burgersLabel.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor, constant: 5),
+            burgersLabel.centerXAnchor.constraint(equalTo: categoriesCollectionView.leadingAnchor, constant: 55),
+            
+            pizzaLabel.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor, constant: 5),
+            pizzaLabel.centerXAnchor.constraint(equalTo: categoriesCollectionView.centerXAnchor),
+            
+            drinksLabel.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor, constant: 5),
+            drinksLabel.centerXAnchor.constraint(equalTo: categoriesCollectionView.trailingAnchor, constant: -55)
         ])
     }
 }
@@ -288,7 +296,13 @@ extension MainScreenViewController: UICollectionViewDelegate, UICollectionViewDa
             return cell
         } else if collectionView == subcategoriesCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SubcategoryCell.reuseIdentifier, for: indexPath) as! SubcategoryCell
-            // Configure subcategory cell as needed
+            
+            guard indexPath.row < selectedSubcategories.count else {
+                return cell
+            }
+            
+            let subcategory = selectedSubcategories[indexPath.row]
+            cell.configure(with: subcategory)
             
             return cell
         }
@@ -301,30 +315,15 @@ extension MainScreenViewController: UICollectionViewDelegate, UICollectionViewDa
             switch indexPath.section {
             case 0:
                 selectedCategory = "Burgers"
-                selectedSubcategories = [
-                    Subcategory(title: "Burger3", description: "Delicious Burger", price: "Rs.150", imageName: "burger3"),
-                    Subcategory(title: "Chicken Burger", description: "Tasty Chicken Burger", price: "Rs.*****", imageName: "chickenBurger")
-                ]
             case 1:
                 selectedCategory = "Pizza"
-                selectedSubcategories = [
-                    Subcategory(title: "Margherita", description: "Classic Margherita Pizza", price: "Rs.100", imageName: "margherita"),
-                    Subcategory(title: "Pepperoni", description: "Spicy Pepperoni Pizza", price: "Rs.120", imageName: "pepperoni"),
-                    Subcategory(title: "Vegetarian", description: "Vegetarian Delight Pizza", price: "Rs.110", imageName: "vegetarian")
-                ]
             case 2:
                 selectedCategory = "Drinks"
-                selectedSubcategories = [
-                    Subcategory(title: "Cola", description: "Refreshing Cola", price: "Rs.50", imageName: "cola"),
-                    Subcategory(title: "Orange Juice", description: "Fresh Orange Juice", price: "Rs.80", imageName: "orangeJuice"),
-                    Subcategory(title: "Water", description: "Pure Water", price: "Rs.30", imageName: "water")
-                ]
             default:
                 break
             }
-
-            subcategoriesCollectionView.reloadData()
+            
+            updateSubcategories()
         }
     }
-
 }

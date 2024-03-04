@@ -15,8 +15,12 @@ class CategoryCell: UICollectionViewCell {
         super.init(frame: frame)
         setupViews()
         
-        layer.borderWidth = 1.0
         layer.cornerRadius = 10
+        
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.5
+        layer.shadowOffset = CGSize(width: 0, height: 2)
+        layer.shadowRadius = 5
     }
     
     required init?(coder: NSCoder) {
