@@ -7,6 +7,7 @@ final class MainScreenViewController: UIViewController {
     
     private var selectedCategory: String?
     private var selectedSubcategories: [Subcategory] = []
+    private var selectedSubcategoryIndexPath: IndexPath?
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -297,7 +298,7 @@ extension MainScreenViewController: UICollectionViewDelegate, UICollectionViewDa
         if collectionView == categoriesCollectionView {
             return CGSize(width: 100, height: 80)
         } else if collectionView == subcategoriesCollectionView {
-            return CGSize(width: 140, height: 120)
+            return CGSize(width: 140, height: 180)
         }
         return CGSize(width: 120, height: 80)
     }
@@ -332,21 +333,39 @@ extension MainScreenViewController: UICollectionViewDelegate, UICollectionViewDa
         return UICollectionViewCell()
     }
 
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == categoriesCollectionView {
-            switch indexPath.section {
-            case 0:
-                selectedCategory = "Burgers"
-            case 1:
-                selectedCategory = "Pizza"
-            case 2:
-                selectedCategory = "Drinks"
-            default:
-                break
+            if collectionView == categoriesCollectionView {
+                switch indexPath.section {
+                case 0:
+                    selectedCategory = "Burgers"
+                case 1:
+                    selectedCategory = "Pizza"
+                case 2:
+                    selectedCategory = "Drinks"
+                default:
+                    break
+                }
+
+                updateSubcategories()
+            } else if collectionView == subcategoriesCollectionView {
+    
+                if let previousIndexPath = selectedSubcategoryIndexPath {
+                    resetCellStyles(collectionView.cellForItem(at: previousIndexPath) as? SubcategoryCell)
+                }
+
+                let cell = collectionView.cellForItem(at: indexPath) as? SubcategoryCell
+                cell?.backgroundColor = ColorExtension.lightRed
+                UIView.animate(withDuration: 0.2) {
+                    cell?.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+                }
+                selectedSubcategoryIndexPath = indexPath
             }
-            
-            updateSubcategories()
+        }
+
+        func resetCellStyles(_ cell: SubcategoryCell?) {
+            cell?.backgroundColor = UIColor.white
+            UIView.animate(withDuration: 0.2) {
+                cell?.transform = CGAffineTransform.identity
+            }
         }
     }
-}
