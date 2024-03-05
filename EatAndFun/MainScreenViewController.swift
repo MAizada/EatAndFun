@@ -187,20 +187,21 @@ final class MainScreenViewController: UIViewController {
         switch selectedCategory {
         case "Burgers":
             selectedSubcategories = [
-                Subcategory(title: "Chicken Burger", description: "*****", price: "Rs.150", imageName: "burger3"),
-                Subcategory(title: "Chicken Burger", description: "Tasty Chicken Burger", price: "Rs.*****", imageName: "chickenBurger")
+                Subcategory(title: "Chicken Burger", description: "*****", price: "4.7$", imageName: "burger3"),
+                Subcategory(title: "Double Cheesy Burger", description: "*****", price: "5.3$", imageName: "burger1"),
+                Subcategory(title: "Double Meat Burger", description: "*****", price: "5.5$", imageName: "doubleMeatBurger")
             ]
         case "Pizza":
             selectedSubcategories = [
-                Subcategory(title: "Margherita", description: "Classic Margherita Pizza", price: "Rs.100", imageName: "margherita"),
-                Subcategory(title: "Pepperoni", description: "Spicy Pepperoni Pizza", price: "Rs.120", imageName: "pepperoni"),
-                Subcategory(title: "Vegetarian", description: "Vegetarian Delight Pizza", price: "Rs.110", imageName: "vegetarian")
+                Subcategory(title: "Margherita", description: "Classic Margherita Pizza", price: "8.8$", imageName: "margherita"),
+                Subcategory(title: "Pepperoni", description: "Spicy Pepperoni Pizza", price: "9.2$", imageName: "pepperoni"),
+                Subcategory(title: "Vegetarian", description: "Vegetarian Delight Pizza", price: "9.2$", imageName: "vegetarian")
             ]
         case "Drinks":
             selectedSubcategories = [
-                Subcategory(title: "Cola", description: "Refreshing Cola", price: "Rs.50", imageName: "cola"),
-                Subcategory(title: "Orange Juice", description: "Fresh Orange Juice", price: "Rs.80", imageName: "orangeJuice"),
-                Subcategory(title: "Water", description: "Pure Water", price: "Rs.30", imageName: "water")
+                Subcategory(title: "Cola", description: "Refreshing Cola", price: "1.5$", imageName: "cola"),
+                Subcategory(title: "Orange Juice", description: "Fresh Orange Juice", price: "2$", imageName: "orangeJuice"),
+                Subcategory(title: "Water", description: "Pure Water", price: "0.9$", imageName: "water")
             ]
         default:
             break
@@ -267,21 +268,45 @@ final class MainScreenViewController: UIViewController {
 
 extension MainScreenViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        if collectionView == categoriesCollectionView {
+            return 3
+        } else if collectionView == subcategoriesCollectionView {
+            return 1
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        if collectionView == categoriesCollectionView {
+            return 1
+        } else if collectionView == subcategoriesCollectionView {
+            return 3
+        }
+        return 0
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+            if collectionView == categoriesCollectionView {
+                let spacing: CGFloat = 10
+                return UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: spacing)
+            }
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 110, height: 70)
+        if collectionView == categoriesCollectionView {
+            return CGSize(width: 100, height: 80)
+        } else if collectionView == subcategoriesCollectionView {
+            return CGSize(width: 140, height: 120)
+        }
+        return CGSize(width: 120, height: 80)
     }
+
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == categoriesCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
-            
+
             switch indexPath.section {
             case 0:
                 cell.imageView.image = UIImage(named: "burgerBlack")
@@ -296,19 +321,17 @@ extension MainScreenViewController: UICollectionViewDelegate, UICollectionViewDa
             return cell
         } else if collectionView == subcategoriesCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SubcategoryCell.reuseIdentifier, for: indexPath) as! SubcategoryCell
-            
             guard indexPath.row < selectedSubcategories.count else {
                 return cell
             }
-            
             let subcategory = selectedSubcategories[indexPath.row]
             cell.configure(with: subcategory)
-            
             return cell
         }
-        
+
         return UICollectionViewCell()
     }
+
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == categoriesCollectionView {

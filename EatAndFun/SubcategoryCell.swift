@@ -24,6 +24,8 @@ class SubcategoryCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         label.textColor = .black
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
@@ -31,6 +33,8 @@ class SubcategoryCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .black
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
@@ -38,6 +42,8 @@ class SubcategoryCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .black
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
@@ -45,6 +51,7 @@ class SubcategoryCell: UICollectionViewCell {
         super.init(frame: frame)
         setupViews()
         
+        layer.cornerRadius = 10
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.5
         layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -67,10 +74,10 @@ class SubcategoryCell: UICollectionViewCell {
         priceLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
+            backgroundImageView.widthAnchor.constraint(equalToConstant: 85),
+            backgroundImageView.heightAnchor.constraint(equalToConstant: 60),
             backgroundImageView.topAnchor.constraint(equalTo: topAnchor),
-            backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            backgroundImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            backgroundImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 18),
             
             titleLabel.topAnchor.constraint(equalTo: backgroundImageView.bottomAnchor, constant: 8),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
