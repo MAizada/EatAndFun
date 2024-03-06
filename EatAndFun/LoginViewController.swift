@@ -87,7 +87,6 @@ final class LoginViewController: UIViewController {
         return view
     }()
     
-    
     private lazy var segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Log In", "Sign Up"])
         let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]
@@ -210,6 +209,11 @@ final class LoginViewController: UIViewController {
         return imageView
     }()
     
+    private lazy var nextButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextButtonTapped))
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -222,6 +226,8 @@ final class LoginViewController: UIViewController {
         [backgroundView, eatLabel, logoImageView, funLabel, pizzaImageView, burgerImageView, loginBackgroundView].forEach { view.addSubview($0) }
         
         [segmentedControl, emailTextField, passwordTextField, confirmPasswordTextField, forgotPasswordButton, actionButton, orLabel, googleIconImageView, facebookIconImageView].forEach { loginBackgroundView.addSubview($0) }
+        
+        navigationItem.rightBarButtonItem = nextButton
     }
     
     //MARK: -
@@ -279,6 +285,12 @@ final class LoginViewController: UIViewController {
         let mainScreenViewController = MainScreenViewController()
         navigationController?.pushViewController(mainScreenViewController, animated: true)
         print("button tapped")
+    }
+    
+    @objc private func nextButtonTapped() {
+        let mainScreenViewController = MainScreenViewController()
+        navigationController?.pushViewController(mainScreenViewController, animated: true)
+        print("Next button tapped")
     }
     
     private func setupConstraints() {

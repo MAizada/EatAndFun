@@ -251,9 +251,9 @@ final class MainScreenViewController: UIViewController {
             categoriesCollectionView.heightAnchor.constraint(equalToConstant: 100),
             
             subcategoriesCollectionView.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor, constant: 50),
-            subcategoriesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            subcategoriesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            subcategoriesCollectionView.heightAnchor.constraint(equalToConstant: 240),
+            subcategoriesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            subcategoriesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            subcategoriesCollectionView.heightAnchor.constraint(equalToConstant: 250),
             
             burgersLabel.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor, constant: 5),
             burgersLabel.centerXAnchor.constraint(equalTo: categoriesCollectionView.leadingAnchor, constant: 55),
@@ -298,7 +298,7 @@ extension MainScreenViewController: UICollectionViewDelegate, UICollectionViewDa
         if collectionView == categoriesCollectionView {
             return CGSize(width: 100, height: 80)
         } else if collectionView == subcategoriesCollectionView {
-            return CGSize(width: 140, height: 180)
+            return CGSize(width: 140, height: 220)
         }
         return CGSize(width: 120, height: 80)
     }

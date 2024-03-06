@@ -76,18 +76,18 @@ class SubcategoryCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             backgroundImageView.widthAnchor.constraint(equalToConstant: 85),
             backgroundImageView.heightAnchor.constraint(equalToConstant: 60),
-            backgroundImageView.topAnchor.constraint(equalTo: topAnchor),
+            backgroundImageView.topAnchor.constraint(equalTo: topAnchor, constant: 15),
             backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 18),
             
-            titleLabel.topAnchor.constraint(equalTo: backgroundImageView.bottomAnchor, constant: 8),
+            titleLabel.topAnchor.constraint(equalTo: backgroundImageView.bottomAnchor, constant: 10),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
+            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
             descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             
-            priceLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 8),
+            priceLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 10),
             priceLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             priceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
         ])
